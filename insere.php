@@ -1,17 +1,22 @@
 <?php
 
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
 require_once("Database.php");
+require_once("Filmes.php");
 
 $db=new Database();
 $pdo=$db->getConection();
 
-$titulo="Tenet";
-$ano="2020";
-$imdb="6723592";
-$query=$pdo->prepare('INSERT INTO Filmes (Titulo, Ano, imdb) VALUES (?,?,?)');
-$query->execute([$titulo,$ano,$imdb]);
-$movie=$query->fetch();
+$filmes=new Filmes($pdo);
 
-echo json_encode($movie);
+if($filmes->insereFilme()){
+    echo "Filme inserido com sucesso!";
+}else{
+    echo "Não foi possível inserir o filme!";
+}
 
 ?>

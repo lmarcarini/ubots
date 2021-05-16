@@ -16,6 +16,14 @@ class Filmes{
         $query->execute();
         return $query;
     }
+
+    public function insereFilme(){
+        $titulo=$_GET['titulo'];
+        $ano=$_GET["ano"];
+        $imdb=$_GET["imdb"];
+        $query=$this->conection->prepare('INSERT INTO Filmes (Titulo, Ano, imdb) VALUES (?,?,?)');
+        return $query->execute([$titulo,$ano,$imdb]);
+    }
 }
 
 
