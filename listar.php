@@ -1,12 +1,9 @@
 <?php
 
 require_once("MyPDO.php");
+require_once("Database.php")
 
-try{
-    $pdo=new MyPDO();
-}catch(\PDOException $e){
-    throw new \PDOException($e->getMessage(),(int)$e->getCode());
-}
+$pdo=new Database();
 
 $searchid = '1';
 $query=$pdo->prepare('SELECT Titulo FROM Filmes WHERE id = ?');
