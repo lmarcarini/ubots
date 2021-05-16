@@ -1,19 +1,22 @@
 <?php
 
-require_once("MyPDO.php");
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-try{
-    $pdo=new MyPDO();
-}catch(\PDOException $e){
-    throw new \PDOException($e->getMessage(),(int)$e->getCode());
+require_once("Database.php");
+require_once("Filmes.php");
+
+$db=new Database();
+$pdo=$db->getConection();
+
+$filmes=new Filmes($pdo);
+
+if($filmes->updateFilme()){
+    echo "Informações do filme atualizadas com sucesso!";
+}else{
+    echo "Não foi possível atualizar as informações!";
 }
-
-$titulo="Tenet";
-$ano="2020";
-$imdb="6723592";
-$query=$pdo->prepare('UPDATE Filmes SET Titulo= ? , Ano= ? , imdb= ? WHERE id=2');
-$query->execute([$titulo,$ano,$imdb]);
-
-echo json_encode("Mudança bem sucedida!");
 
 ?>

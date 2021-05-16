@@ -1,14 +1,21 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 require_once("Database.php");
+require_once("Filmes.php");
 
 $db=new Database();
 $pdo=$db->getConection();
 
-$deleteId = '1';
-$query=$pdo->prepare('DELETE FROM Filmes WHERE id = ?');
-$query->execute([$deleteId]);
+$filmes=new Filmes($pdo);
 
-echo "Exclusão bem sucedida!";
+if($filmes->deletaFilme()){
+    echo "Filme deletado com sucesso!";
+}else{
+    echo "Não foi possível deletar o filme!";
+}
 
 ?>
