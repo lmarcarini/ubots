@@ -1,5 +1,7 @@
 <?php
 
+require_once("MyPDO.php");
+
 class Database{
 
     public $conection;
@@ -11,6 +13,7 @@ class Database{
         }catch(\PDOException $e){
             throw new \PDOException($e->getMessage(),(int)$e->getCode());
         }
+        return $this->conection;
     }
 }
 

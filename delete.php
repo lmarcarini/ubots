@@ -1,12 +1,9 @@
 <?php
 
-require_once("MyPDO.php");
+require_once("Database.php");
 
-try{
-    $pdo=new MyPDO();
-}catch(\PDOException $e){
-    throw new \PDOException($e->getMessage(),(int)$e->getCode());
-}
+$db=new Database();
+$pdo=$db->getConection();
 
 $deleteId = '1';
 $query=$pdo->prepare('DELETE FROM Filmes WHERE id = ?');
