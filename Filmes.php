@@ -3,7 +3,6 @@
 class Filmes{
 
     private $conection;
-    private $dbTable = "Filmes";
 
     public function __construct($pdo){
         $this->conection = $pdo;
@@ -40,6 +39,25 @@ class Filmes{
         $sql='DELETE FROM Filmes WHERE id = ?';
         $query=$this->conection->prepare($sql);
         return $query->execute([$id]);
+    }git
+
+    public function avaliaFilme(){
+        $filme_id=$_GET['filmeId'];
+        $user_id=$_GET['userEmail']
+        $score=$_GET['score'];
+        $sql='SELECT id FROM Avaliacoes WHERE userId=? AND filmeId= ?';
+        $query=$this->conection->prepare($sql);
+        $query->execute([$user_id,$filme_id]);
+        $result=$query->fetch();
+        if(!$result) {
+            $sql='INSERT INTO Avaliacoes (userId, filmeId, avaliacao) VALUES (?,?,?)';
+            $query=$this->conection->prepare($sql);
+            return $query->execute([$user_id,$filme_id,$score]);
+        }
+        $id=$result['id'];
+        $sql='UPDATE Avaliacoes SET userId= ? , filmeId = ? , avaliacao= ? WHERE id=?';
+        $query=$this->conection->prepare($sql);
+        return $query->execute([$user_id,$filme_id,$score,$id]);
     }
 }
 
