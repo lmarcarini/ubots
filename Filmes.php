@@ -39,11 +39,11 @@ class Filmes{
         $sql='DELETE FROM Filmes WHERE id = ?';
         $query=$this->conection->prepare($sql);
         return $query->execute([$id]);
-    }git
+    }
 
     public function avaliaFilme(){
         $filme_id=$_GET['filmeId'];
-        $user_id=$_GET['userEmail']
+        $user_id=$_GET['userId'];
         $score=$_GET['score'];
         $sql='SELECT id FROM Avaliacoes WHERE userId=? AND filmeId= ?';
         $query=$this->conection->prepare($sql);
@@ -58,6 +58,14 @@ class Filmes{
         $sql='UPDATE Avaliacoes SET userId= ? , filmeId = ? , avaliacao= ? WHERE id=?';
         $query=$this->conection->prepare($sql);
         return $query->execute([$user_id,$filme_id,$score,$id]);
+    }
+
+    public function sugereFilme(){
+        $user_id=1;//$_GET['userId'];
+        $sql='SELECT * FROM Filmes WHERE id NOT IN (SELECT filmeId FROM Avaliacoes WHERE userId = ?)';
+        $query=$this->conection->prepare($sql);
+        $query->execute([$user_id]);
+        return $query;
     }
 }
 
