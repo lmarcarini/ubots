@@ -16,6 +16,7 @@ $filmes=new Filmes($pdo);
 if($filmes->updateFilme()){
     echo "Informações do filme atualizadas com sucesso!";
 }else{
+    http_response_code(400)
     echo "Não foi possível atualizar as informações!";
 }
 
