@@ -15,6 +15,7 @@ $filmes=new Filmes($pdo);
 if($filmes->deletaFilme()){
     echo "Filme deletado com sucesso!";
 }else{
+    http_response_code(400)
     echo "Não foi possível deletar o filme!";
 }
 

@@ -53,9 +53,11 @@ class Filmes{
     }
 
     public function avaliaFilme(){
+        if(!isset($_GET['filmeId']) or !isset($_GET['userId'] or !isset($_GET['score'])) return false
         $filme_id=$_GET['filmeId'];
         $user_id=$_GET['userId'];
         $score=$_GET['score'];
+        if(in_array($score,["1","2","3","4","5"])) return false
         $sql='SELECT id FROM avaliacoes WHERE userId=? AND filmeId= ?';
         $query=$this->conection->prepare($sql);
         $query->execute([$user_id,$filme_id]);
@@ -72,11 +74,18 @@ class Filmes{
     }
 
     public function sugereFilme(){
-        $user_id=isset($_GET['userId'])?$_GET['userId']:1;
-        $sql='SELECT * FROM filmes WHERE id NOT IN (SELECT filmeId FROM avaliacoes WHERE userId = ?)';
+        if(isset($_GET['userId'])){
+            $user_id=$_GET['userId'];
+            $sql='SELECT * FROM filmes WHERE id NOT IN (SELECT filmeId FROM avaliacoes WHERE userId = ?)';
+            $query=$this->conection->prepare($sql);
+            $query->execute([$user_id]);
+            return $query;
+        }
+        $sql='SELECT * FROM filmes LIMIT 100';
         $query=$this->conection->prepare($sql);
-        $query->execute([$user_id]);
+        $query->execute();
         return $query;
+
     }
 }
 

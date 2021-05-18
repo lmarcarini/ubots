@@ -15,6 +15,7 @@ $filmes=new Filmes($pdo);
 if($filmes->avaliaFilme()){
     echo "Filme avaliado com sucesso!";
 }else{
+    http_response_code(400)
     echo "Avaliacao Falhou!";
 }
 

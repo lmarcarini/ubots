@@ -16,6 +16,7 @@ $filmes=new Filmes($pdo);
 if($filmes->insereFilme()){
     echo "Filme inserido com sucesso!";
 }else{
+    http_response_code(400)
     echo "Não foi possível inserir o filme!";
 }
 
